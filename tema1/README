@@ -1,0 +1,37 @@
+    Pe scurt, problema cere gestionarea unor comenzi primite de roboți.
+Fiecare dintrea acestea are asociată câte o singură funcție, cu nume 
+sugestiv. La fiecare pas, este citită comanda primită, eventual și 
+parametrii, apoi apelată funcția corespunzătoare comenzii. Pentru 
+simplitate, eleganță și modularizare, 'algoritmul' care gestionează totul 
+se află în funcția solution(), apelată în main(), care, la rândul ei,
+apelează toate celelalte funcții. În main() am păstrat doar niște alocări
+și dealocări de memorie ale unor structuri de date folosite în soluție.
+
+    Consider că nu mai este necesară explicarea aici a funcțiilor, deoarece,
+ele implementează ad literam câte o comandă în parte și respectă cerința din
+enunțul temei și comentariile din cod cred că sunt suficiente, cât despre cod,
+m-a străduit să fie cât mai clar. 
+
+    Ca structuri de date, am implementat și folosit pe cele obligatorii, cu
+restricțiile precizate în enunț, dar și două auxiliare (stack_type și 
+queue_type) pentru a înlocui tuple<>, deoarece este foarte încet. În rest:
+o stivă pentru toate comenzile adăugate în coada oricărui robot (last_add_cmd),
+o stivă pentru toate comenzile executate (last_exec_cmd), un vector de întregi,
+pentru a reține câte cutii (mai) are fiecare robot (boxes[]), o matrice de 
+întregi, pentru a reține câte cutii se află în fiecare celulă (map[][]) și un 
+vector de cozi cu două capete (deque-uri), pentru a-i aloca fiecărui robot
+câte o coadă de comenzi (cmd_queue[]).
+
+    Pentru afișarea comenzilor din coada unui robot am creat o clasă de
+iteratori speciali pentru lista dublu-înlănțuită, din care este implementată
+coada cu două capete, am supraîncărcat operatorii ++ și != pentru această 
+clasă, și definit funcțiile begin() și end() din clasa listei pentru a putea
+itera prin aceasta cu un 'range-based for loop'.
+    Menționez că am scris funcțiile claselor, în mare, compatibile cu STL, 
+având aceleași denumiri ca cele din container-ele STL corespondente, operatori
+supraîncărcați și posibilitatea de a itera prin listă. Fiecare dintre aceste
+structuri de date este implementată în câte un fișier antet separat, în afara
+celor două auxiliare, dar, acestea din urmă nu sunt generice, ci create cu
+unicul scop de a rezolva o problemă particulară, pe când celelalte pot fi, cu
+ușurință, folosite și în afara acestui program sau înclocuite cu echivalentele
+lor din STL.

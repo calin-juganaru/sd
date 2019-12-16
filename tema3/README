@@ -1,0 +1,28 @@
+studenți:
+{
+    Chiriță Maria-Luissa -- 312CA
+    Jugănaru Călin-Vlad  -- 314CA
+};
+
+    La funcțiile implementate de noi am înlocuit 'TODO(you)' cu numele celui
+care a scris-o. Unele funcții n-au necesitat comentarii fiindcă explicațile din
+schelet și codul scris de noi sunt suficient de clare. Totuși, două dintre ele
+au nevoie de niște precizări:
+
+
+    find_best_split()
+
+    Iterând prin vectorul dimensions[], luăm toate valorile unice de pe acea
+coloană din matricea samples[][] și facem o medie a lor, pe care o vom folosi
+ca valoare de split. Această medie este o combinație între media aritmetică și
+media geometrică și am ajuns la forma aceasta prin metodă empirică, observând
+că astfel obținem acuratețea cea mai mare. În urma split-ului, calculăm 
+entropiile și IG-ul și apoi cautăm maximul.
+
+
+    train()
+
+    Toți vectorii din samples[][] au aceeași dimensiune (28 * 28 + 1 = 785),
+deci cautăm cel mai bun split pe baza imaginilor primite și a sqrt(785)
+dimensiuni aleatoare. Dacă valorile obținute sunt și valide, putem face split
+cu ele și continuăm algoritmul recursiv.

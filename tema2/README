@@ -1,0 +1,105 @@
++ --------------------------------------------------------------------------- +
+
+    Fiecare task a fost rezolvat în câte o funcție cu același nume, acestea
+fiind apelate în main(), acolo rămânând în rest doar niște citiri și inițiali-
+zări, pentru claritate a codului.
+    Clasa generică 'graf' și funcțiile de parcurgere a grafului se găsesc în 
+fișierul antet 'graf.h', iar clasa care implementează tabela de dispersie și
+funcțiile de hash, în 'hash.h'.
+    Pentru hash_table am folosit un vector de liste. La construire, aceasta
+primește un număr N pentru a seta dimensiunea vectorului. Cele două funcții
+de hash returnează un numar modulo acel N, deci, în cel mai favorabil caz,
+acela în care nu există coliziuni, vor fi N intrări și N elemente în vector,
+deci este eficient din punct de vedere al memorie folosite. Totuși aceasta
+depinde extrem de mult de funcția de hash folosită.
+    Pentru rezolvarea acestei teme, citesc lista cu numele de orașe în ordinea
+lexicografică dată și le atribui câte un număr natural, de la 0, la numărul
+de orașe - 1. Mapez indicii acestor orașe în tabela index[] și numele lor în
+orase[], iar în continuare voi lucra numai cu numere naturale, până când vor
+trebui afișate, și atunci voi afla numere orașul cu indicele acela asociat.
+    În cazul indicilor este simplu: dacă inițializez tabela cu N elemente,
+iar orașele au indici de la 0 la N - 1, făcând pur și simplu % N în funcția
+de hash, indicii rezultați vor fi identici cu cei inițiali și unici, deci nu
+vor exista coloziuni.
+    Pentru string-uri am creat eu o funcție prin care generez numere bazate pe
+codurile ASCII ale caracterelor și s-a dovedit destul de bună în practică,
+având puține coliziuni.
+
++ --------------------------------------------------------------------------- +
+
+Task 1:
+    
+    Gradul de aglomerație al unui oraș este, practic, gradul interior al acelui
+nod din graful asociat hărții. Pentru a determina orașul cu grad de aglomerație
+maxim trebuie doar aflat numărul maxim de noduri incidente ale unui nod din 
+graful transpus.
+
++ --------------------------------------------------------------------------- +
+
+Task 2:
+    
+    Validitatea hărții rutiere este dată de existența unui drum între oricare
+două noduri în graful asociat. Pentru aceasta, trebuie determinate componentele
+tare conexe. Prin definiție, două noduri se află în aceeași componentă tare 
+conexă dacă și numai dacă există un drum între ele, deci dacă există o singură
+astfel de componentă, există un drum între oricare două noduri, iar harta este
+validă.
+    Componentele tare conexe pot fi determinate în două moduri: prin parcurgeri
+în adâncime și prin gradele nodurilor. Prima variantă este mai simplă de imple-
+mentat și înțeles, și de aceea am ales-o. În primul rând, aplicăm parcurgeri în
+adâncime (DFS) pe întreg graful (vizitând toate nodurile). De aici, obținem
+numărul de componente conexe (după câte parcurgeri au fost aplicate) și ordinea
+topologică (invers ordinea ieșirii nodurilor din DFS).
+    Parcurgând apoi toate nodurile în adâncime în ordinea topologică obținută
+anterior, aflăm componentele tare conexe. Dacă există mai mult de o componentă
+conexă este clar că vor exista și mai mult de una tare conexă, deci harta nu va
+fi validă.
+
++ --------------------------------------------------------------------------- +
+
+Task 3:
+
+    Două orașe nu pot comunica dacă nu există niciun drum între ele. Folosind
+componentele tare conexe obținute anterior, putem afla orașele cu care nu comu-
+nică fiecare oraș dat, acelea fiind orice nod care se află în oricare altă com-
+ponentă tare conexă față de nodul asociat orașului dat.
+    Reluând mențiunea de mai sus, dacă există o singură componentă tare conexă,
+atunci orice oraș este accesibil pentru oricare altul.
+
++ --------------------------------------------------------------------------- +
+
+Task 4:
+
+    Pentru a determina cea mai apropiată benzinărie de un oraș dat, putem afla
+distanța minimă până în fiecare oraș, pornind din cel dat, apoi verificat care
+dintre acelea are o benzinărie și este cel mai apropiat, dacă acesta și există.
+    Fiind un graf 'unweighted', adică arcele nu au costuri asociate, acestora
+putând fi atribuite, prin convenție, o valoare constantă, de preferat 1, deci
+o simplă parcurgere în lățime ne va da și distanța minimă dintre nodul din care
+o pornim și toate celelalte. Nodului de pornire și celor inaccesibile lui le 
+vom atribui distanța 0.
+    Cantitatea de combustibil rămasă în rezervor este egală cu diferența dintre
+cantitatea inițială și distanța parcursă înmulțită cu consumul pe unitate.
+
++ --------------------------------------------------------------------------- +
+
+Task 5:
+
+    Cel mai aglomerat traseu este cel pe care se află cei mai mulți călători.
+Pentru fiecare autobuz dat, inserăm într-o tabelă de dispersie o codificare
+unică a acelui traseu și numărul de călători. Dacă în datele de intrare apare
+de mai multe ori același traseu, adăugăm în tabelă, la acel traseu, numărul nou
+de călători. În timpul citirii aflăm și traseul cel mai aglomerat.
+    Această codificare am ales s-o fac dintr-un string format din numele celor
+două orașe, despărțite de caracterul spațiu (putea fi oricare altul), deoarece
+este păstrată unicitatea codului fiecărui traseu și sunt ușor de recuperat nu-
+mele celor două orașe la final.
+    Având aceste codificări, aflăm care este traseul cel mai aglomerat și cel
+mai mic din punct de vedere lexicografic dintre ele, dacă sunt mai multe, apoi,
+rulăm un singur BFS pornind din nodul orașului de plecare, dar pe care putem 
+să-l oprim după ce ajungem la nodul asociat orașului destinație, pentru o mică
+optimizare. Pentru a afișa întreg traseul este nevoie de un vector de tați,
+adică în care să rețin nodul din care am ajuns în nodul curent, apoi vor fi
+afișate recursiv prin funcția afisare_traseu().
+
++ --------------------------------------------------------------------------- +
